@@ -45,7 +45,6 @@ proxy.get('/api/restaurant-data', (res, req) => {
 
 proxy.get('/api/also-viewed', (req, res) => {
   request('http://localhost:9001/bundle.js', (err, response, body) => {
-    res.header("Access-Control-Allow-Origin", "*");
     if (err) {
       console.log('error posting request to Top Shelf api: ', err);
     } else {
