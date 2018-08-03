@@ -1,0 +1,31 @@
+
+
+/* #root {
+  z-index: -1;
+  position: absolute;
+  top: -9999px;
+  right: -9999px;
+  bottom: 0;
+  left: -9999px;
+} */
+#root {
+  display: block;
+}
+#reviews {
+  display: inline-block;
+  float: left;
+  width: 75%;
+}
+
+#info {
+  display: inline-block;
+  float: right;
+  width: 20%;
+
+}
+
+#alsoViewed {
+  display: inline-block;
+  float: right;
+  width: 20%;
+}

@@ -2,19 +2,23 @@ const express = require('express');
 const path = require('path');
 const parser = require('body-parser');
 const request = require('request');
-// const router = require('./router.js');
 
 const PORT = process.env.PORT || 9000;
 const proxy = express();
 
 proxy.use(parser.json());
 proxy.use(parser.urlencoded({extends: true}));
-
 proxy.use(express.static(path.join(__dirname, '../client/dist')));
-// proxy.use('/api', router);
 
-proxy.get('/api/top-shelf', (res, req) => {
-  request('http://localhost:9001/bundle.js', (err, res, body) => {
+proxy.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+proxy.get('/api/top-shelf', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  request('http://localhost:3000/bundle.js', (err, response, body) => {
     if (err) {
       console.log('error posting request to Top Shelf api: ', err);
     } else {
@@ -23,8 +27,8 @@ proxy.get('/api/top-shelf', (res, req) => {
   })
 })
 
-proxy.get('/api/reviews', (res, req) => {
-  request('http://localhost:9001/bundle.js', (err, res, body) => {
+proxy.get('/api/reviews', (req, res) => {
+  request('http://localhost:3002/bundle.js', (err, response, body) => {
     if (err) {
       console.log('error posting request to Top Shelf api: ', err);
     } else {
@@ -33,8 +37,8 @@ proxy.get('/api/reviews', (res, req) => {
   })
 })
 
-proxy.get('/api/restaurant-data', (res, req) => {
-  request('http://localhost:9001/bundle.js', (err, res, body) => {
+proxy.get('/api/restaurant-data', (req, res) => {
+  request('http://localhost:3005/bundle.js', (err, response, body) => {
     if (err) {
       console.log('error posting request to Top Shelf api: ', err);
     } else {
@@ -49,7 +53,7 @@ proxy.get('/api/also-viewed', (req, res) => {
       console.log('error posting request to Top Shelf api: ', err);
     } else {
       console.log(body);
-      res.status(200).send(body);
+      res.status(201).send(body);
     }
   })
 })
