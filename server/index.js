@@ -10,12 +10,6 @@ proxy.use(parser.json());
 proxy.use(parser.urlencoded({extends: true}));
 proxy.use(express.static(path.join(__dirname, '../client/dist')));
 
-proxy.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
 proxy.get('/api/top-shelf', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   request('http://localhost:3000/bundle.js', (err, response, body) => {
